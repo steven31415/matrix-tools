@@ -75,7 +75,9 @@ void fourRussiansBooleanSquareMultiply(size_t dimSize, int A[], int B[], int C[]
 	int sliceCount = ceil((double) dimSize / sliceSize);
 	int paddedSize = sliceSize * sliceCount;
 	int wordCount = pow(2, sliceSize);
-	int hash[wordCount][dimSize];
+
+	// O(n^2)
+	int (*hash)[dimSize] = malloc(sizeof(int[wordCount][dimSize]));
 
 	// O(n)
 	for (int i = 0; i < dimSize; ++i) {
@@ -88,8 +90,8 @@ void fourRussiansBooleanSquareMultiply(size_t dimSize, int A[], int B[], int C[]
 	}
 
 	// O(n^2)
-	int A_m[dimSize][paddedSize];
-	int B_m[paddedSize][dimSize];
+	int (*A_m)[paddedSize] = malloc(sizeof(int[dimSize][paddedSize]));
+	int (*B_m)[dimSize] = malloc(sizeof(int[paddedSize][dimSize]));
 
 	// O(n^2)
 	buildMatrix(dimSize * dimSize, A, dimSize, paddedSize, A_m, dimSize, dimSize);
@@ -148,4 +150,8 @@ void fourRussiansBooleanSquareMultiply(size_t dimSize, int A[], int B[], int C[]
 			}
 		}
 	}
+
+	free(A_m);
+	free(B_m);
+	free(hash);
 }

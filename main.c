@@ -20,7 +20,10 @@ void fourRussiansAccuracyTest(int minDimSize, int maxDimSize) {
 	for (int dimSize = minDimSize; dimSize <= maxDimSize; ++dimSize) {
 		size_t arraySize = dimSize * dimSize;
 
-		int A[arraySize], B[arraySize], C_fr[arraySize], C_naive[arraySize];
+		int* A = malloc(sizeof(int) * arraySize);
+		int* B = malloc(sizeof(int) * arraySize);
+		int* C_fr = malloc(sizeof(int) * arraySize);
+		int* C_naive = malloc(sizeof(int) * arraySize);
 
 		// Fill A and B with randomly distributed booleans
 		for (int i = 0; i < arraySize; ++i) {
@@ -35,6 +38,11 @@ void fourRussiansAccuracyTest(int minDimSize, int maxDimSize) {
 		// Print result of test
 		printf("Dimension: %d\t%s\n", dimSize,
 			testArrayEqual(C_fr, C_naive, arraySize) ? "Match": "Error");
+
+		free(A);
+		free(B);
+		free(C_fr);
+		free(C_naive);
 	}
 }
 
@@ -62,8 +70,5 @@ void fourRussiansTimingTest(int minDimSize, int maxDimSize) {
 }
 
 int main() {
-
-	fourRussiansAccuracyTest(0, 100);
-
-	return 0;
+	fourRussiansAccuracyTest(1, 100);
 }
